@@ -1,0 +1,11 @@
+# Terraform
+.terraform
+*.tfstate
+*.tfstate.backup
+.terraform.lock.hcl
+.*-cache
+plan.txt
+
+# Terragrunt
+.terragrunt-cache
+*.terragrunt-cache
