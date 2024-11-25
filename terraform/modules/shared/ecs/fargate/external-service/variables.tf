@@ -34,10 +34,6 @@ variable "record_type" {
   default = "A"
 }
 
-# variable "ttl" {
-#   default = "300"
-# }
-
 variable "validation_method" {
   default = "DNS"
 }

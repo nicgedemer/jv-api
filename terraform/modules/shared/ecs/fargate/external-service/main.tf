@@ -32,7 +32,7 @@ data "aws_subnets" "public" {
 }
 
 locals {
-  non_ephemeral = (var.environment == "prod" || var.environment == "miami" || var.environment == "staging")  ? true : false
+  non_ephemeral = (var.environment == "prod" || var.environment == "miami" || var.environment == "staging") ? true : false
   prod          = var.environment == "prod" ? true : false
 }
 
@@ -277,13 +277,6 @@ resource "aws_security_group" "ecs" {
     security_groups = ["${aws_security_group.alb.id}"]
   }
 
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["${var.vpc_cidr}"]
-  }
-
   egress {
     from_port        = 0
     to_port          = 0
@@ -301,7 +294,7 @@ resource "aws_security_group" "ecs" {
 # load balancer
 
 resource "aws_lb_target_group" "web" {
-  name                          = "${var.environment}-${var.service_name}-lb-tg" 
+  name                          = "${var.environment}-${var.service_name}-lb-tg"
   port                          = var.target_group_port
   protocol                      = var.target_group_protocol
   target_type                   = var.target_group_target_type
@@ -636,26 +629,26 @@ resource "aws_cloudwatch_metric_alarm" "ecs-running-task-count-none" {
 resource "aws_s3_bucket_policy" "allow_load_balancer" {
   bucket = aws_s3_bucket.bucket.id
   policy = jsonencode({
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": [
-                  "arn:aws:iam::127311923021:root",
-                  "arn:aws:iam::${local.account_id}:root"
-                ]
-            },
-            "Action": [
-                "s3:GetBucketLocation",
-                "s3:ListBucket",
-                "s3:PutObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::miami-jv-load-balancer-logs",
-                "arn:aws:s3:::miami-jv-load-balancer-logs/*"
-            ]
-        }
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Principal" : {
+          "AWS" : [
+            "arn:aws:iam::127311923021:root",
+            "arn:aws:iam::${local.account_id}:root"
+          ]
+        },
+        "Action" : [
+          "s3:GetBucketLocation",
+          "s3:ListBucket",
+          "s3:PutObject"
+        ],
+        "Resource" : [
+          "arn:aws:s3:::miami-jv-load-balancer-logs",
+          "arn:aws:s3:::miami-jv-load-balancer-logs/*"
+        ]
+      }
     ]
   })
 }

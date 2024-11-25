@@ -45,7 +45,7 @@ variable "managed_rules" {
       name                 = "AWSManagedRulesAmazonIpReputationList"
       priority             = 70
       vendor_name          = "AWS"
-      override_action      = "none" 
+      override_action      = "none"
       rule_action_override = []
     },
     {
@@ -61,6 +61,6 @@ variable "managed_rules" {
       vendor_name          = "AWS"
       override_action      = "count"
       rule_action_override = []
-    }    
+    }
   ]
 }
